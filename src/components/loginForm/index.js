@@ -6,13 +6,16 @@ class LoginForm extends Component {
 
     return (
       <Segment>
+        <Header as="h3">Log-in</Header>
         <Form size="large">
           <Form.Input
+            label="Email"
             fluid icon="user"
             iconPosition="left"
             placeholder="Email address"
           />
           <Form.Input
+            label="Password"
             fluid icon="lock"
             iconPosition="left"
             placeholder="Password"

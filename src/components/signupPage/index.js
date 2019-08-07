@@ -1,19 +1,20 @@
 import React, {Component, Fragment} from 'react';
 import { Grid, Image, Segment } from 'semantic-ui-react'
-import LoginForm from "../loginForm";
-import loginImg from '../../../public/poi2.jpg'
+import SignupForm from "../signupForm";
+import singupImg from '../../../public/poi2.jpg'
+import LoginForm from "../loginPage";
 
-class LoginPage extends Component {
+class SignupPage extends Component {
   render() {
     return (
       <Segment>
         <Grid columns={2}>
           <Grid.Row>
             <Grid.Column>
-              <Image src={loginImg} size="medium"/>
+              <SignupForm/>
             </Grid.Column>
             <Grid.Column>
-              <LoginForm/>
+              <Image src={singupImg} size="medium"/>
             </Grid.Column>
           </Grid.Row>
         </Grid>
@@ -21,4 +22,5 @@ class LoginPage extends Component {
     )
   }
 }
-export default LoginPage;
+
+export default SignupPage;
