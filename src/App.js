@@ -1,31 +1,19 @@
-import React from 'react';
+import React, {Component, Fragment} from 'react';
 import logo from './logo.svg';
 import './App.css';
 import ButtonExampleButton from './components/examples/btn';
+import MainMenu from './components/mainmenu/';
+import SideBar from './components/sidebar/';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-      <ButtonExampleButton/>
-
-      <button className="ui button" role="button">Btn with Semantic-UI</button>
-    </div>
-  );
+class App extends Component {
+  render() {
+    return (
+      <Fragment>
+        <MainMenu/>
+        <SideBar/>
+      </Fragment>
+    );
+  }
 }
 
 export default App;

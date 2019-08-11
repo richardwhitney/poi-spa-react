@@ -1,7 +1,7 @@
 import React, {Component, Fragment} from 'react';
 import { Grid, Image, Segment } from 'semantic-ui-react'
 import LoginForm from "../loginForm";
-import loginImg from '../../../public/poi2.jpg'
+import loginImg from '../../images/poi2.jpg'
 
 class LoginPage extends Component {
   render() {
