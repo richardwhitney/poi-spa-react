@@ -12,6 +12,13 @@ import LoginPage from '../components/loginPage/';
 import SignupForm from '../components/signupForm';
 import SignupPage from '../components/signupPage';
 import WelcomePage from '../components/welcomPage';
+import Point from '../components/point';
+import PointList from '../components/pointList';
+
+const sample = {
+  name: "Test Point",
+  addedBy: "Test User"
+}
 
 storiesOf('POI React/Nav Bar', module).add('default', () => <WelcomeMenu />);
 storiesOf('POI React/Nav Bar', module).add('auth', () => <MainMenu/>);
@@ -26,4 +33,13 @@ storiesOf('POI React/Login Page', module)
 storiesOf('POI React/Signup Form', module).add('default', () => <SignupForm/>);
 
 storiesOf('POI React/Signup Page', module).add('default', () => <SignupPage/>);
+
+storiesOf('POI React/Point', module).add("default", () => (
+  <Point point={sample}/>
+));
+
+storiesOf('POI React/Point List', module).add('default', () => {
+  const samples = [sample, sample, sample, sample, sample]
+  return <PointList points={samples}/>
+})
 

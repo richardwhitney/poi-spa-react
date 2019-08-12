@@ -4,7 +4,7 @@ import { Segment, Table, Container, Button, Icon } from "semantic-ui-react";
 class Point extends Component {
   render() {
     return (
-      <Segment raised>
+      <Segment raised clearing>
         <Table celled>
           <Table.Header>
             <Table.Row>
@@ -13,16 +13,18 @@ class Point extends Component {
             </Table.Row>
           </Table.Header>
           <Table.Body>
-            <Table.Cell>
-              Test
-            </Table.Cell>
-            <Table.Cell>
-              Test User
-            </Table.Cell>
+            <Table.Row>
+              <Table.Cell>
+                {this.props.point.name}
+              </Table.Cell>
+              <Table.Cell>
+                {this.props.point.addedBy}
+              </Table.Cell>
+            </Table.Row>
           </Table.Body>
         </Table>
         <Container>
-          <Button color="blue">View<Icon className="chevron right" /></Button>
+          <Button color="blue" floated="right">View<Icon className="chevron right" /></Button>
         </Container>
       </Segment>
     )
