@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Menu, Accordion, Header } from 'semantic-ui-react';
+import {Menu, Accordion, Header, Icon} from 'semantic-ui-react';
 import SideBarItem from '../sidebarItem';
 
 class SideBar extends Component {
@@ -20,7 +20,10 @@ class SideBar extends Component {
         <Menu.Item>
           <Header inverted as="h5">Categories</Header>
         </Menu.Item>
-
+        <Menu.Item>
+          <SideBarItem/>
+          <Icon className='plus' />
+        </Menu.Item>
         <Menu.Item>
           <Accordion.Title
             active={activeIndex === 0}
