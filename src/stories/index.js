@@ -14,6 +14,8 @@ import SignupPage from '../components/signupPage';
 import WelcomePage from '../components/welcomPage';
 import Point from '../components/point';
 import PointList from '../components/pointList';
+import PointForm from '../components/pointForm';
+import Dashboard from '../components/dashboard';
 
 const sample = {
   name: "Test Point",
@@ -41,5 +43,13 @@ storiesOf('POI React/Point', module).add("default", () => (
 storiesOf('POI React/Point List', module).add('default', () => {
   const samples = [sample, sample, sample, sample, sample]
   return <PointList points={samples}/>
-})
+});
+
+storiesOf('POI React/Point Form', module).add('default', () => (
+  <PointForm/>
+));
+
+storiesOf('POI React/Dashboard', module).add('default', () => {
+  return <Dashboard/>
+});
 

@@ -15,7 +15,7 @@ class MainMenu extends Component {
     const { visible } = this.state
 
     return (
-      <Menu inverted fixed="top">
+      <Menu inverted >
         <Menu.Menu position="right">
           <Menu.Item as="a" name="IoI">
             POI

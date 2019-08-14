@@ -4,13 +4,14 @@ import './App.css';
 import ButtonExampleButton from './components/examples/btn';
 import MainMenu from './components/mainmenu/';
 import SideBar from './components/sidebar/';
+import Dashboard from './components/dashboard';
 
 class App extends Component {
   render() {
     return (
       <Fragment>
         <MainMenu/>
-        <SideBar/>
+        <Dashboard/>
       </Fragment>
     );
   }
