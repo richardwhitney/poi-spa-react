@@ -4,6 +4,7 @@ import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
 import { linkTo } from '@storybook/addon-links';
 import 'semantic-ui-css/semantic.min.css';
+import { MemoryRouter, Route } from "react-router";
 
 import WelcomeMenu from '../components/welcomemenu/';
 import MainMenu from '../components/mainmenu/';
@@ -16,6 +17,7 @@ import Point from '../components/point';
 import PointList from '../components/pointList';
 import PointForm from '../components/pointForm';
 import Dashboard from '../components/dashboard';
+import PointDetail from '../components/pointDetail';
 
 const sample = {
   name: "Test Point",
@@ -51,5 +53,9 @@ storiesOf('POI React/Point Form', module).add('default', () => (
 
 storiesOf('POI React/Dashboard', module).add('default', () => {
   return <Dashboard/>
+});
+
+storiesOf('POI React/Point Detail', module).add('default', () => {
+  return <PointDetail/>
 });
 

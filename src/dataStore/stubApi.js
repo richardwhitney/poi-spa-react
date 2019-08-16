@@ -12,6 +12,17 @@ class StubAPi {
     return this.points;
   }
 
+  getPoint(id) {
+    let index = _.findIndex(
+      this.points,
+      point => `${point._id}` === id
+    );
+    if (index !== -1) {
+      return this.points[index];
+    }
+    return null
+  }
+
   addPoint(name, description, category) {
     let id = 1;
     let last = _.last(this.points);

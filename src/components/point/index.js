@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 import { Segment, Table, Container, Button, Icon } from "semantic-ui-react";
 
 class Point extends Component {
@@ -24,7 +25,11 @@ class Point extends Component {
           </Table.Body>
         </Table>
         <Container>
-          <Button color="blue" floated="right">View<Icon className="chevron right" /></Button>
+          <Link
+            to={`/poi/${this.props.point._id}`}
+            >
+            <Button color="blue" floated="right">View<Icon className="chevron right" /></Button>
+          </Link>
         </Container>
       </Segment>
     )

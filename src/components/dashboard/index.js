@@ -2,7 +2,6 @@ import React, {Component, Fragment} from 'react';
 import { Grid, Image, Segment } from 'semantic-ui-react'
 import PointList from '../pointList/';
 import PointForm from '../pointForm/';
-import pointData from '../.././dataStore/pointData'
 import categoryData from '../.././dataStore/categoryData';
 
 
