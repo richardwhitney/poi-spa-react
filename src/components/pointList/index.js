@@ -5,7 +5,7 @@ import Point from '../point/';
 class PointList extends Component {
   render() {
     const pointList = this.props.points.map(p => (
-      <Point key={p.name} point={p} />
+      <Point key={p._id} point={p} />
     ));
     return (
       <Fragment>

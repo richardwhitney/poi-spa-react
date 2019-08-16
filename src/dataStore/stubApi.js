@@ -1,0 +1,36 @@
+import _ from "lodash";
+import categoriesData from './categoryData'
+import pointsData from './pointData'
+
+class StubAPi {
+  constructor() {
+    this.points = pointsData;
+    this.categories = categoriesData;
+  }
+
+  getPoints() {
+    return this.points;
+  }
+
+  addPoint(name, description, category) {
+    let id = 1;
+    let last = _.last(this.points);
+    if (last) {
+      id = last._id + 1
+    }
+    const point = {
+      name: name,
+      description: description,
+      addedBy: '',
+      _id: id
+    };
+    this.points.push(point);
+  }
+
+  getCategories() {
+    return this.categories
+  }
+
+}
+
+export default new StubAPi();
