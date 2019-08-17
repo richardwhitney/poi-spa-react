@@ -38,6 +38,19 @@ class StubAPi {
     this.points.push(point);
   }
 
+  updatePoint(id, name, description, category) {
+    let index = _.findIndex(
+      this.points,
+      point => `${point._id}` === id
+    );
+    if (index !== -1) {
+      this.points[index].name = name;
+      this.points[index].description = description;
+      return true;
+    }
+    return false;
+  }
+
   getCategories() {
     return this.categories
   }

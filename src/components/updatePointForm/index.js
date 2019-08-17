@@ -1,19 +1,41 @@
 import React, { Component, Fragment } from 'react';
+import { Redirect } from 'react-router-dom';
 import { Button, Form, Header, Message, Segment, TextArea, Select } from "semantic-ui-react";
+import api from "../../dataStore/stubApi";
 
 
-class PointForm extends Component {
+class UpdatePointForm extends Component {
   constructor() {
     super();
     this.state = {
       name: '',
       description: '',
-      category: ''
-    }
+      category: '',
+      redirect: false
+    };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
+  componentDidMount() {
+    const point = api.getPoint(this.props.id);
+    this.setState({
+      name: point.name,
+      description: point.description
+    });
+  }
+
+  setRedirect = () => {
+    this.setState({
+      redirect: true
+    });
+  }
+
+  renderRedirect = () => {
+    if (this.state.redirect) {
+      return <Redirect to="/" />
+    }
+  }
   handleChange(event, result) {
     const {name, value} = result;
     this.setState({
@@ -23,19 +45,17 @@ class PointForm extends Component {
 
   handleSubmit(event) {
     event.preventDefault();
-    console.log(`Form submitted: ${this.state.name} ${this.state.description} ${this.state.category}`);
-    this.props.handleAddPoint(this.state.name, this.state.description, this.state.category);
-    this.setState({
-      name: '',
-      description: '',
-      category: ''
-    });
+    console.log(`Update Form submitted: ${this.props.id} ${this.state.name} ${this.state.description} ${this.state.category}`);
+    this.props.handleUpdatePoint(this.props.id, this.state.name, this.state.description, this.state.category);
+    this.setRedirect();
   }
 
   render() {
+
     return (
       <Fragment>
-        <Header as="h3">Add Island</Header>
+        {this.renderRedirect()}
+        <Header as="h3">Update Island</Header>
         <Segment>
           <Form size="large" onSubmit={this.handleSubmit}>
             <Form.Field
@@ -63,7 +83,7 @@ class PointForm extends Component {
               value={this.state.description}
               onChange={this.handleChange}
             />
-            <Button color="blue" size="large">Add</Button>
+            <Button color="blue" size="large">Update</Button>
           </Form>
         </Segment>
       </Fragment>
@@ -71,4 +91,4 @@ class PointForm extends Component {
   }
 }
 
-export default PointForm;
+export default UpdatePointForm;

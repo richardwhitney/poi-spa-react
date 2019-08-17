@@ -14,7 +14,7 @@ class App extends Component {
   render() {
     let points = api.getPoints();
     return (
-      <Dashboard handleAddPoint={this.addPoint} points={points}/>
+      <Dashboard handleAddPoint={this.addPoint} points={points} options={this.props.options}/>
     );
   }
 }

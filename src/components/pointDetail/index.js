@@ -1,5 +1,5 @@
 import React, {Component, Fragment} from 'react';
-import { withRouter } from 'react-router-dom';
+import { withRouter, Link } from 'react-router-dom';
 import api from '../../dataStore/stubApi';
 import {Grid, Image, Segment, Header, Container, Button} from 'semantic-ui-react'
 import loginImg from "../../images/poi2.jpg";
@@ -24,7 +24,11 @@ class PointDetail extends Component {
                   <Header as="h4">Description</Header>
                   <p>{point.description}</p>
                   <Container>
-                    <Button color="blue" floated="left">Update</Button>
+                    <Link
+                      to={`/updatepoint/${point._id}`}
+                      >
+                      <Button color="blue" floated="left">Update</Button>
+                    </Link>
                     <Button color="red" floated="right">Delete</Button>
                   </Container>
                 </Segment>

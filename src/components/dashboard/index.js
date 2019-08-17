@@ -9,17 +9,12 @@ class Dashboard extends Component{
 
   render() {
 
-    const categories = categoryData.map(category => {
-      console.log(category.name.toLocaleLowerCase());
-      return {key: category._id, text: category.name, value: category.name.toLocaleLowerCase()};
-    });
-
     return (
       <Segment>
         <Grid columns={2}>
           <Grid.Row>
             <Grid.Column>
-              <PointForm options={categories} handleAddPoint={this.props.handleAddPoint}/>
+              <PointForm options={this.props.options} handleAddPoint={this.props.handleAddPoint}/>
             </Grid.Column>
             <Grid.Column>
               <PointList points={this.props.points}/>
