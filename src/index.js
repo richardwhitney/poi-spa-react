@@ -16,6 +16,11 @@ class Router extends Component {
     this.setState({});
   };
 
+  deletePoint = (id) => {
+    api.deletePoint(id);
+    this.setState({});
+  };
+
   render() {
     const categories = categoryData.map(category => {
       console.log(category.name.toLocaleLowerCase());
@@ -25,7 +30,7 @@ class Router extends Component {
       <BrowserRouter>
         <MainMenu/>
         <Switch>
-          <Route path="/poi/:id" component={PointDetail} />
+          <Route path="/poi/:id" render={() => <PointDetail handleDeletePoint={this.deletePoint} />} />
           <Route path="/updatepoint/:id" render={() => <UpdatePointPage handleUpdatePoint={this.updatePoint} options={categories} />} />
           <Route exact path="/" render={() => <App options={categories} />} />
           <Redirect from="*" to="/"/>

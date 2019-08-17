@@ -2,9 +2,25 @@ import React, {Component, Fragment} from 'react';
 import { withRouter, Link } from 'react-router-dom';
 import api from '../../dataStore/stubApi';
 import {Grid, Image, Segment, Header, Container, Button} from 'semantic-ui-react'
-import loginImg from "../../images/poi2.jpg";
 
 class PointDetail extends Component {
+  constructor() {
+    super()
+    this.state = {
+      redirect: false
+    };
+    this.handleDelete = this.handleDelete.bind(this);
+  }
+
+  handleDelete(event) {
+    event.preventDefault();
+    const {id} = this.props.match.params;
+    let path = '/';
+    this.props.history.push(path);
+    console.log(`Point id: ${id}`);
+    this.props.handleDeletePoint(id);
+  }
+
   render() {
     const { id } = this.props.match.params;
     const point = api.getPoint(id);
@@ -29,7 +45,7 @@ class PointDetail extends Component {
                       >
                       <Button color="blue" floated="left">Update</Button>
                     </Link>
-                    <Button color="red" floated="right">Delete</Button>
+                    <Button color="red" floated="right" onClick={this.handleDelete}>Delete</Button>
                   </Container>
                 </Segment>
               </Grid.Column>

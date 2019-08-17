@@ -51,6 +51,11 @@ class StubAPi {
     return false;
   }
 
+  deletePoint(id) {
+    let elements = _.remove(this.points, point => point._id === id);
+    return elements;
+  }
+
   getCategories() {
     return this.categories
   }
