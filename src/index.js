@@ -2,6 +2,9 @@ import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter, Route, Redirect, Switch } from "react-router-dom";
 import './index.css';
+import WelcomePage from './components/welcomPage';
+import LoginPage from './components/loginPage';
+import SignupPage from './components/signupPage';
 import App from './App';
 import MainMenu from './components/mainmenu/';
 import PointDetail from './components/pointDetail';
@@ -9,6 +12,7 @@ import UpdatePointPage from './components/updatePointPage'
 import * as serviceWorker from './serviceWorker';
 import api from "./dataStore/stubApi";
 import categoryData from "./dataStore/categoryData";
+import WelcomeMenu from "./components/welcomemenu";
 
 class Router extends Component {
   updatePoint = (id, name, description, category) => {
@@ -28,11 +32,14 @@ class Router extends Component {
     });
     return (
       <BrowserRouter>
-        <MainMenu/>
+        <WelcomeMenu/>
         <Switch>
+          <Route path="/login" component={LoginPage} />
+          <Route path="/signup" component={SignupPage} />
+          <Route path="/dashboard" render={() => <App options={categories} />} />
           <Route path="/poi/:id" render={() => <PointDetail handleDeletePoint={this.deletePoint} />} />
           <Route path="/updatepoint/:id" render={() => <UpdatePointPage handleUpdatePoint={this.updatePoint} options={categories} />} />
-          <Route exact path="/" render={() => <App options={categories} />} />
+          <Route exact path="/" component={WelcomePage} />
           <Redirect from="*" to="/"/>
         </Switch>
       </BrowserRouter>

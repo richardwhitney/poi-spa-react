@@ -4,6 +4,7 @@ import LoginForm from "../loginForm";
 import loginImg from '../../images/poi2.jpg'
 
 class LoginPage extends Component {
+
   render() {
     return (
       <Segment>
