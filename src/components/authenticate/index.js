@@ -5,12 +5,7 @@ import {getJwt} from "../../utils/jwt";
 import axios from 'axios';
 
 class Authenticate extends Component {
-  constructor() {
-    super();
-    this.state = {
-      user: undefined
-    }
-  }
+
 
   componentDidMount() {
     const jwt = getJwt();
@@ -18,25 +13,14 @@ class Authenticate extends Component {
       this.props.history.push('/');
     }
     axios.get('http://localhost:3002/api/users/current', { headers: {Authorization: `Bearer ${jwt}`} })
-      .then(res => this.setState({
-        user: res.data
-      })).catch(err => {
+      .then(res => this.props.handleAuth(res.data)).catch(err => {
+        console.log(err);
         localStorage.removeItem('poi-jwt');
         this.props.history.push('/')
     });
   }
 
   render() {
-    if (this.state.user === undefined) {
-      return (
-        <Segment>
-          <Dimmer active>
-            <Loader/>
-          </Dimmer>
-          <Fragment>{this.props.children}</Fragment>
-        </Segment>
-      )
-    }
     return (
       <Fragment>{this.props.children}</Fragment>
     )

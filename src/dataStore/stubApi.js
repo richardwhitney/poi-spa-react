@@ -5,7 +5,7 @@ import axios from 'axios';
 
 class StubAPi {
   constructor() {
-    this.points = pointsData;
+    this.points = [];
     this.categories = categoriesData;
   }
 
@@ -17,19 +17,34 @@ class StubAPi {
     }).then(res => localStorage.setItem('poi-jwt', res.data.token));
   }
 
-  getPoints() {
+  async getPoints() {
+    const response = await axios.get('http://localhost:3002/api/points');
+    const points = response.data;
+    this.points = points;
     return this.points;
+    /*
+    axios.get('http://localhost:3002/api/points')
+      .then(res => {
+        console.log(res.data);
+        this.points = res.data;
+      });
+    return this.points;
+    */
   }
 
-  getPoint(id) {
-    let index = _.findIndex(
-      this.points,
-      point => `${point._id}` === id
-    );
-    if (index !== -1) {
-      return this.points[index];
-    }
-    return null
+  async getPoint(id) {
+    const response = await  axios.get(`http://localhost:3002/api/points/${id}`);
+    const point = await response.data;
+    console.log(JSON.stringify(point));
+    return point;
+    /*
+    axios.get(`http://localhost:3002/api/points/${id}`)
+      .then(res => {
+        //console.log(res.data);
+        point = res.data;
+      });
+    return point;
+    */
   }
 
   addPoint(name, description, category) {

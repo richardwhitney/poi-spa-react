@@ -7,19 +7,27 @@ import WelcomePage from './components/welcomPage';
 import LoginPage from './components/loginPage';
 import SignupPage from './components/signupPage';
 import App from './App';
-import MainMenu from './components/navbar/mainmenu/';
+import Navbar from './components/navbar';
 import PointDetail from './components/pointDetail';
 import UpdatePointPage from './components/updatePointPage'
 import * as serviceWorker from './serviceWorker';
 import api from "./dataStore/stubApi";
 import categoryData from "./dataStore/categoryData";
-import WelcomeMenu from "./components/navbar/welcomemenu";
 
 class Router extends Component {
 
-  login(email, password) {
-    api.login(email, password);
-    //this.setState({});
+  constructor() {
+    super();
+    this.state = {
+      user: undefined
+    }
+    this.auth = this.auth.bind(this)
+  }
+
+  auth(data) {
+    this.setState({
+      user: data
+    });
   }
 
   updatePoint = (id, name, description, category) => {
@@ -37,14 +45,15 @@ class Router extends Component {
       console.log(category.name.toLocaleLowerCase());
       return {key: category._id, text: category.name, value: category.name.toLocaleLowerCase()};
     });
+
     return (
       <BrowserRouter>
-        <WelcomeMenu/>
+        <Navbar user={this.state.user}/>
         <Switch>
           <Route exact path="/" component={WelcomePage} />
           <Route path="/login" render={() => <LoginPage handleLogin={this.login}/>} />
           <Route path="/signup" component={SignupPage} />
-          <Authenticate>
+          <Authenticate handleAuth={this.auth}>
             <Route path="/poi/:id" render={() => <PointDetail handleDeletePoint={this.deletePoint} />} />
             <Route path="/dashboard" render={() => <App options={categories} />} />
             <Route path="/updatepoint/:id" render={() => <UpdatePointPage handleUpdatePoint={this.updatePoint} options={categories} />} />

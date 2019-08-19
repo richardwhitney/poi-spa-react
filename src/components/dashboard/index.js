@@ -2,7 +2,6 @@ import React, {Component, Fragment} from 'react';
 import { Grid, Image, Segment } from 'semantic-ui-react'
 import PointList from '../pointList/';
 import PointForm from '../pointForm/';
-import categoryData from '../.././dataStore/categoryData';
 
 
 class Dashboard extends Component{
@@ -17,7 +16,7 @@ class Dashboard extends Component{
               <PointForm options={this.props.options} handleAddPoint={this.props.handleAddPoint}/>
             </Grid.Column>
             <Grid.Column>
-              <PointList points={this.props.points}/>
+              <PointList/>
             </Grid.Column>
           </Grid.Row>
         </Grid>
