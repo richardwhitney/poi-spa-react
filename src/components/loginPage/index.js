@@ -14,7 +14,7 @@ class LoginPage extends Component {
               <Image src={loginImg} size="medium"/>
             </Grid.Column>
             <Grid.Column>
-              <LoginForm/>
+              <LoginForm handleLogin={this.props.handleLogin}/>
             </Grid.Column>
           </Grid.Row>
         </Grid>

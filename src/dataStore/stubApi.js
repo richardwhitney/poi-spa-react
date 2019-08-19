@@ -1,11 +1,20 @@
 import _ from "lodash";
 import categoriesData from './categoryData'
 import pointsData from './pointData'
+import axios from 'axios';
 
 class StubAPi {
   constructor() {
     this.points = pointsData;
     this.categories = categoriesData;
+  }
+
+  login(email, password) {
+    //'/api/users/authenticate'
+    axios.post('http://localhost:3002/api/users/authenticate', {
+      email: email,
+      password: password
+    }).then(res => localStorage.setItem('poi-jwt', res.data.token));
   }
 
   getPoints() {

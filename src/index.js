@@ -2,19 +2,26 @@ import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter, Route, Redirect, Switch } from "react-router-dom";
 import './index.css';
+import Authenticate from './components/authenticate';
 import WelcomePage from './components/welcomPage';
 import LoginPage from './components/loginPage';
 import SignupPage from './components/signupPage';
 import App from './App';
-import MainMenu from './components/mainmenu/';
+import MainMenu from './components/navbar/mainmenu/';
 import PointDetail from './components/pointDetail';
 import UpdatePointPage from './components/updatePointPage'
 import * as serviceWorker from './serviceWorker';
 import api from "./dataStore/stubApi";
 import categoryData from "./dataStore/categoryData";
-import WelcomeMenu from "./components/welcomemenu";
+import WelcomeMenu from "./components/navbar/welcomemenu";
 
 class Router extends Component {
+
+  login(email, password) {
+    api.login(email, password);
+    //this.setState({});
+  }
+
   updatePoint = (id, name, description, category) => {
     api.updatePoint(id, name, description, category);
     this.setState({});
@@ -34,12 +41,15 @@ class Router extends Component {
       <BrowserRouter>
         <WelcomeMenu/>
         <Switch>
-          <Route path="/login" component={LoginPage} />
-          <Route path="/signup" component={SignupPage} />
-          <Route path="/dashboard" render={() => <App options={categories} />} />
-          <Route path="/poi/:id" render={() => <PointDetail handleDeletePoint={this.deletePoint} />} />
-          <Route path="/updatepoint/:id" render={() => <UpdatePointPage handleUpdatePoint={this.updatePoint} options={categories} />} />
           <Route exact path="/" component={WelcomePage} />
+          <Route path="/login" render={() => <LoginPage handleLogin={this.login}/>} />
+          <Route path="/signup" component={SignupPage} />
+          <Authenticate>
+            <Route path="/poi/:id" render={() => <PointDetail handleDeletePoint={this.deletePoint} />} />
+            <Route path="/dashboard" render={() => <App options={categories} />} />
+            <Route path="/updatepoint/:id" render={() => <UpdatePointPage handleUpdatePoint={this.updatePoint} options={categories} />} />
+          </Authenticate>
+
           <Redirect from="*" to="/"/>
         </Switch>
       </BrowserRouter>

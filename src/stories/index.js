@@ -6,8 +6,8 @@ import { linkTo } from '@storybook/addon-links';
 import 'semantic-ui-css/semantic.min.css';
 import { MemoryRouter, Route } from "react-router";
 
-import WelcomeMenu from '../components/welcomemenu/';
-import MainMenu from '../components/mainmenu/';
+import WelcomeMenu from '../components/navbar/welcomemenu/';
+import MainMenu from '../components/navbar/mainmenu/';
 import LoginForm from '../components/loginForm/';
 import LoginPage from '../components/loginPage/';
 import SignupForm from '../components/signupForm';

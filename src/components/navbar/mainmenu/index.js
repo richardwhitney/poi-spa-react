@@ -1,6 +1,6 @@
 import React, {Component, Fragment} from 'react';
 import { Menu, Segment, Sidebar, Icon, Header } from 'semantic-ui-react';
-import LoginPage from '../loginPage';
+import LoginPage from '../../loginPage';
 
 class MainMenu extends Component {
 
