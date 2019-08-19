@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
+import { withRouter } from 'react-router-dom';
 import { Button, Form, Header, Segment } from "semantic-ui-react";
+import axios from "axios";
 
 class SignupForm extends Component {
   constructor() {
@@ -24,6 +26,24 @@ class SignupForm extends Component {
   handleSubmit(event) {
     event.preventDefault();
     console.log(`Signup form submitted: ${this.state.firstName} ${this.state.lastName} ${this.state.email} ${this.state.password}`);
+    const user = {
+      firstName: this.state.firstName,
+      lastName: this.state.lastName,
+      email: this.state.email,
+      password: this.state.password
+    };
+    axios.post('http://localhost:3002/api/users', user)
+      .then(res => {
+        axios.post('http://localhost:3002/api/users/authenticate', {
+          email: res.data.email,
+          password: res.data.password
+        }).then(res => {
+          localStorage.setItem('poi-jwt', res.data.token);
+          this.props.history.push('/dashboard');
+        });
+        console.log(`Response ${JSON.stringify(res)}`)
+        //this.props.history.push('/dashboard');
+      });
     this.setState({
       firstName: '',
       lastName: '',
@@ -76,4 +96,4 @@ class SignupForm extends Component {
   }
 }
 
-export default SignupForm;
+export default withRouter(SignupForm);
