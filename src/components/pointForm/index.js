@@ -8,23 +8,35 @@ class PointForm extends Component {
     this.state = {
       name: '',
       description: '',
-      category: ''
+      category: '',
+      categoryId: ''
     }
     this.handleChange = this.handleChange.bind(this);
+    this.handleSelectChange = this.handleSelectChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   handleChange(event, result) {
     const {name, value} = result;
     this.setState({
-      [name]: value
+      [name]: value,
     });
   }
 
-  handleSubmit(event) {
+  handleSelectChange(event, result) {
+    const { value } = result;
+    const { key } = result.options.find(o => o.value === value);
+    this.setState({
+      category: value,
+      categoryId: key
+    })
+  }
+
+  async handleSubmit(event) {
     event.preventDefault();
-    console.log(`Point form submitted: ${this.state.name} ${this.state.description} ${this.state.category}`);
-    this.props.handleAddPoint(this.state.name, this.state.description, this.state.category);
+    console.log(`Point form submitted: ${this.state.name} ${this.state.description} ${this.state.categoryId}`);
+    //await this.props.handleAddPoint(this.state.name, this.state.description, this.state.categoryId);
+    this.props.handleAddPointLocal(this.state.name, this.state.description, this.state.category);
     this.setState({
       name: '',
       description: '',
@@ -46,7 +58,7 @@ class PointForm extends Component {
               placeholder="Category"
               name="category"
               value={this.state.category}
-              onChange={this.handleChange}
+              onChange={this.handleSelectChange}
             />
             <Form.Input
               label="Name"

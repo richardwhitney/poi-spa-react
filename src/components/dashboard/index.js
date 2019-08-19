@@ -13,7 +13,7 @@ class Dashboard extends Component{
         <Grid columns={2}>
           <Grid.Row>
             <Grid.Column>
-              <PointForm options={this.props.options} handleAddPoint={this.props.handleAddPoint}/>
+              <PointForm options={this.props.options} handleAddPointLocal={this.props.handleAddPointLocal}/>
             </Grid.Column>
             <Grid.Column>
               <PointList/>

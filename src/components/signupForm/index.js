@@ -41,7 +41,6 @@ class SignupForm extends Component {
           localStorage.setItem('poi-jwt', res.data.token);
           this.props.history.push('/dashboard');
         });
-        console.log(`Response ${JSON.stringify(res)}`)
         //this.props.history.push('/dashboard');
       });
     this.setState({

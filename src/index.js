@@ -24,6 +24,8 @@ class Router extends Component {
     }
     this.auth = this.auth.bind(this);
     this.logout = this.logout.bind(this);
+    this.addPoint = this.addPoint.bind(this);
+    this.addPointLocal = this.addPointLocal.bind(this);
   }
 
   auth(data) {
@@ -37,6 +39,17 @@ class Router extends Component {
     this.setState({
       user: null
     })
+  }
+
+  async addPoint(name, descripton, categoryid) {
+    await api.addPoint(name, descripton, categoryid);
+    this.setState({});
+  }
+
+
+  addPointLocal(name, description, category) {
+    api.addPointLocal(name, description, category);
+    this.setState({})
   }
 
   updatePoint = (id, name, description, category) => {
@@ -65,7 +78,7 @@ class Router extends Component {
           <Route path="/logout" component={Logout} />
           <Authenticate handleAuth={this.auth}>
             <Route path="/poi/:id" render={() => <PointDetail handleDeletePoint={this.deletePoint} />} />
-            <Route path="/dashboard" render={() => <App options={categories} />} />
+            <Route path="/dashboard" render={() => <App handleAddPointLocal={this.addPointLocal}options={categories} />} />
             <Route path="/updatepoint/:id" render={() => <UpdatePointPage handleUpdatePoint={this.updatePoint} options={categories} />} />
           </Authenticate>
 

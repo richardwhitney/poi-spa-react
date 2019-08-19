@@ -7,12 +7,12 @@ class PointDetail extends Component {
   constructor() {
     super()
     this.state = {
-      redirect: false,
-      data: []
+      redirect: false
     };
     this.handleDelete = this.handleDelete.bind(this);
   }
 
+  /*
   async componentDidMount() {
     const {id} = this.props.match.params;
     const point = await api.getPoint(id);
@@ -20,6 +20,7 @@ class PointDetail extends Component {
       data: point
     });
   }
+  */
 
   handleDelete(event) {
     event.preventDefault();
@@ -31,45 +32,38 @@ class PointDetail extends Component {
   }
 
   render() {
-    if (this.state.data !== null) {
-      return (
-        <Fragment>
-          <Segment>
-            <Grid columns={2}>
-              <Grid.Row>
-                <Grid.Column>
-                  <Segment raised>
-                    <Image src={this.state.data.imageUrl} size="large" rounded centered/>
-                  </Segment>
-                </Grid.Column>
-                <Grid.Column>
-                  <Segment raised clearing>
-                    <Header as="h3">{this.state.data.name}</Header>
-                    <Header as="h4">Description</Header>
-                    <p>{this.state.data.description}</p>
-                    <Container>
-                      <Link
-                        to={`/updatepoint/${this.state.data._id}`}
-                      >
-                        <Button color="blue" floated="left">Update</Button>
-                      </Link>
-                      <Button color="red" floated="right" onClick={this.handleDelete}>Delete</Button>
-                    </Container>
-                  </Segment>
-                </Grid.Column>
-              </Grid.Row>
-            </Grid>
-          </Segment>
-        </Fragment>
-      );
-    } else {
-      return (
-        <div>
-          Loading
-        </div>
-      )
-    }
-
+    const { id } = this.props.match.params;
+    const point = api.getPointLocal(id);
+    return (
+      <Fragment>
+        <Segment>
+          <Grid columns={2}>
+            <Grid.Row>
+              <Grid.Column>
+                <Segment raised>
+                  <Image src={point.imageUrl} size="large" rounded centered/>
+                </Segment>
+              </Grid.Column>
+              <Grid.Column>
+                <Segment raised clearing>
+                  <Header as="h3">{point.name}</Header>
+                  <Header as="h4">Description</Header>
+                  <p>{point.description}</p>
+                  <Container>
+                    <Link
+                      to={`/updatepoint/${point._id}`}
+                    >
+                      <Button color="blue" floated="left">Update</Button>
+                    </Link>
+                    <Button color="red" floated="right" onClick={this.handleDelete}>Delete</Button>
+                  </Container>
+                </Segment>
+              </Grid.Column>
+            </Grid.Row>
+          </Grid>
+        </Segment>
+      </Fragment>
+    );
   }
 }
 
