@@ -6,7 +6,7 @@ class Navbar extends Component {
   render() {
     if (this.props.user) {
       return (
-        <MainMenu user={this.props.user}/>
+        <MainMenu user={this.props.user} handleLogout={this.props.handleLogout}/>
       )
     }
     return (

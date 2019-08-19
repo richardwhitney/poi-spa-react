@@ -18,7 +18,7 @@ class StubAPi {
   }
 
   async getPoints() {
-    const response = await axios.get('http://localhost:3002/api/points');
+    const response = await axios.get('http://localhost:3002/api/points', {headers: {Authorization: `Bearer ${localStorage.getItem('poi-jwt')}`}});
     const points = response.data;
     this.points = points;
     return this.points;
@@ -33,7 +33,7 @@ class StubAPi {
   }
 
   async getPoint(id) {
-    const response = await  axios.get(`http://localhost:3002/api/points/${id}`);
+    const response = await  axios.get(`http://localhost:3002/api/points/${id}`, {headers: {Authorization: `Bearer ${localStorage.getItem('poi-jwt')}`}});
     const point = await response.data;
     console.log(JSON.stringify(point));
     return point;

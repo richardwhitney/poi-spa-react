@@ -13,6 +13,7 @@ import UpdatePointPage from './components/updatePointPage'
 import * as serviceWorker from './serviceWorker';
 import api from "./dataStore/stubApi";
 import categoryData from "./dataStore/categoryData";
+import Logout from './components/logout';
 
 class Router extends Component {
 
@@ -21,13 +22,21 @@ class Router extends Component {
     this.state = {
       user: undefined
     }
-    this.auth = this.auth.bind(this)
+    this.auth = this.auth.bind(this);
+    this.logout = this.logout.bind(this);
   }
 
   auth(data) {
     this.setState({
       user: data
     });
+  }
+
+  logout() {
+    localStorage.removeItem('poi-jwt');
+    this.setState({
+      user: null
+    })
   }
 
   updatePoint = (id, name, description, category) => {
@@ -48,11 +57,12 @@ class Router extends Component {
 
     return (
       <BrowserRouter>
-        <Navbar user={this.state.user}/>
+        <Navbar user={this.state.user} handleLogout={this.logout}/>
         <Switch>
           <Route exact path="/" component={WelcomePage} />
           <Route path="/login" render={() => <LoginPage handleLogin={this.login}/>} />
           <Route path="/signup" component={SignupPage} />
+          <Route path="/logout" component={Logout} />
           <Authenticate handleAuth={this.auth}>
             <Route path="/poi/:id" render={() => <PointDetail handleDeletePoint={this.deletePoint} />} />
             <Route path="/dashboard" render={() => <App options={categories} />} />

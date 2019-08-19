@@ -1,29 +1,24 @@
 import React, {Component, Fragment} from 'react';
-import { Menu, Segment, Sidebar, Icon, Header } from 'semantic-ui-react';
-import LoginPage from '../../loginPage';
+import { Menu} from 'semantic-ui-react';
+import { Link } from 'react-router-dom';
 
 class MainMenu extends Component {
 
-  state = { visible: false }
-
-  handleHideClick = () => this.setState({ visible: false })
-  handleShowClick = () => this.setState({ visible: true })
-  handleSidebarHide = () => this.setState({ visible: false })
-
   render() {
-
-    const { visible } = this.state
 
     return (
       <Menu inverted >
         <Menu.Menu position="right">
-          <Menu.Item as="a" name="IoI">
-            POI
-          </Menu.Item>
-
-          <Menu.Item as="a" name="Logout">
-            Logout
-          </Menu.Item>
+          <Link to="/dashboard">
+            <Menu.Item name="IoI">
+              POI
+            </Menu.Item>
+          </Link>
+          <Link to="/logout"  onClick={this.props.handleLogout}>
+            <Menu.Item name="Logout">
+              Logout
+            </Menu.Item>
+          </Link>
         </Menu.Menu>
       </Menu>
     );
