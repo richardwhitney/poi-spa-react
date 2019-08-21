@@ -12,7 +12,6 @@ import PointDetail from './components/pointDetail';
 import UpdatePointPage from './components/updatePointPage'
 import * as serviceWorker from './serviceWorker';
 import api from "./dataStore/stubApi";
-import categoryData from "./dataStore/categoryData";
 import Logout from './components/logout';
 
 class Router extends Component {
@@ -20,12 +19,27 @@ class Router extends Component {
   constructor() {
     super();
     this.state = {
-      user: undefined
+      user: undefined,
+      currentPoint: [],
+      points: [],
+      categories: []
     }
     this.auth = this.auth.bind(this);
     this.logout = this.logout.bind(this);
     this.addPoint = this.addPoint.bind(this);
     this.addPointLocal = this.addPointLocal.bind(this);
+    this.getPoint = this.getPoint.bind(this);
+    this.updatePoint = this.updatePoint.bind(this);
+    this.deletePoint = this.deletePoint.bind(this);
+  }
+
+  async componentDidMount() {
+    const points = await api.getPoints();
+    const categories = await api.getCategories();
+    this.setState({
+      points: points,
+      categories: categories
+    });
   }
 
   auth(data) {
@@ -41,33 +55,34 @@ class Router extends Component {
     })
   }
 
+  async getPoint(id) {
+    const point = await api.getPoint(id);
+    this.setState({
+      currentPoint: point
+    });
+    console.log(`Get point ${id}`);
+  }
   async addPoint(name, descripton, categoryid) {
     await api.addPoint(name, descripton, categoryid);
     this.setState({});
   }
-
 
   addPointLocal(name, description, category) {
     api.addPointLocal(name, description, category);
     this.setState({})
   }
 
-  updatePoint = (id, name, description, category) => {
-    api.updatePoint(id, name, description, category);
+  async updatePoint(id, name, description, category)  {
+    await api.updatePoint(id, name, description, category);
     this.setState({});
-  };
+  }
 
-  deletePoint = (id) => {
-    api.deletePoint(id);
+  async deletePoint(id) {
+    await api.deletePoint(id);
     this.setState({});
-  };
+  }
 
   render() {
-    const categories = categoryData.map(category => {
-      console.log(category.name.toLocaleLowerCase());
-      return {key: category._id, text: category.name, value: category.name.toLocaleLowerCase()};
-    });
-
     return (
       <BrowserRouter>
         <Navbar user={this.state.user} handleLogout={this.logout}/>
@@ -77,9 +92,9 @@ class Router extends Component {
           <Route path="/signup" component={SignupPage} />
           <Route path="/logout" component={Logout} />
           <Authenticate handleAuth={this.auth}>
-            <Route path="/poi/:id" render={() => <PointDetail handleDeletePoint={this.deletePoint} />} />
-            <Route path="/dashboard" render={() => <App handleAddPointLocal={this.addPointLocal}options={categories} />} />
-            <Route path="/updatepoint/:id" render={() => <UpdatePointPage handleUpdatePoint={this.updatePoint} options={categories} />} />
+            <Route path="/poi/:id" render={() => <PointDetail handleDeletePoint={this.deletePoint} handleGetPoint={this.getPoint} point={this.state.currentPoint}/>} />
+            <Route path="/dashboard" render={() => <App handleAddPoint={this.addPoint} options={this.state.categories} points={this.state.points}/>} />
+            <Route path="/updatepoint/:id" render={() => <UpdatePointPage handleUpdatePoint={this.updatePoint} handleGetPoint={this.getPoint} options={this.state.categories} point={this.state.currentPoint}/>} />
           </Authenticate>
 
           <Redirect from="*" to="/"/>

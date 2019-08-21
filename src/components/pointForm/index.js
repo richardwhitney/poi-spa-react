@@ -35,8 +35,7 @@ class PointForm extends Component {
   async handleSubmit(event) {
     event.preventDefault();
     console.log(`Point form submitted: ${this.state.name} ${this.state.description} ${this.state.categoryId}`);
-    //await this.props.handleAddPoint(this.state.name, this.state.description, this.state.categoryId);
-    this.props.handleAddPointLocal(this.state.name, this.state.description, this.state.category);
+    await this.props.handleAddPoint(this.state.name, this.state.description, this.state.categoryId);
     this.setState({
       name: '',
       description: '',

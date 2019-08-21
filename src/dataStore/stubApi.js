@@ -1,16 +1,13 @@
 import _ from "lodash";
-import categoriesData from './categoryData'
-import pointsData from './pointData'
 import axios from 'axios';
 
 class StubAPi {
   constructor() {
     this.points = [];
-    this.categories = categoriesData;
+    this.categories = [];
   }
 
   login(email, password) {
-    //'/api/users/authenticate'
     axios.post('http://localhost:3002/api/users/authenticate', {
       email: email,
       password: password
@@ -36,9 +33,11 @@ class StubAPi {
   }
 
   async getPoint(id) {
-    axios.defaults.headers.post['Content-Type'] ='application/x-www-form-urlencoded';
-    axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
-    const response = await  axios.get(`http://localhost:3002/api/points/${id}`, {headers: {Authorization: `Bearer ${localStorage.getItem('poi-jwt')}`}});
+    const response = await  axios.get(`http://localhost:3002/api/points/${id}`, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('poi-jwt')}`
+      }
+    });
     const point = await response.data;
     console.log(JSON.stringify(point));
     return point;
@@ -59,38 +58,53 @@ class StubAPi {
     this.points.push(point);
   }
 
-
-  async addPoint(name, description, categoryid, user) {
+  async addPoint(name, description, categoryid) {
+    const userRes = await axios.get(`http://localhost:3002/api/users/current`,{
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('poi-jwt')}`
+      }
+    });
+    const currentUser = await userRes.data;
     const point = {
       name: name,
       description: description,
-      addedBy: user,
-      geo: []
+      addedBy: currentUser
     };
-    /*
-    const response = await axios.post(`http://localhost:3002/api/${categoryid}/points`, {
-      point
-    });
-    */
-
-    const response = fetch(`http://localhost:3002/api/${categoryid}/points`, {
-      method: 'post',
+    const response = await axios.post(`http://localhost:3002/api/categories/${categoryid}/points`, point, {
       headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-        'Access-Control-Allow-Origin': '*'
-      },
-      body: JSON.stringify(point)
+        Authorization: `Bearer ${localStorage.getItem('poi-jwt')}`
+      }
     });
-    console.log(response);
     const newPoint = await response.data;
-    //newPoint.geo = point.geo;
     this.points.push(newPoint);
     console.log(`Point added: ${JSON.stringify(newPoint)}`);
   }
 
+  async updatePoint(id, name, description, location) {
+    const userRes = await axios.get(`http://localhost:3002/api/users/current`,{
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('poi-jwt')}`
+      }
+    });
+    const currentUser = await userRes.data;
+    const point = {
+      name: name,
+      description: description,
+      addedBy: currentUser,
+      geo: {
+        lat: '0',
+        lng: '0'
+      }
+    };
+    const response = await axios.put(`http://localhost:3002/api/points/${id}`, point, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('poi-jwt')}`
+      }
+    });
+    console.log(`Point updated: ${response.data}`);
+  }
 
-  updatePoint(id, name, description, category) {
+  updatePointLocal(id, name, description, category) {
     let index = _.findIndex(
       this.points,
       point => `${point._id}` === id
@@ -103,13 +117,17 @@ class StubAPi {
     return false;
   }
 
-  deletePoint(id) {
-    let elements = _.remove(this.points, point => point._id === id);
-    return elements;
+  async deletePoint(id) {
+    const response = await axios.delete(`http://localhost:3002/api/points/${id}`, {headers: {Authorization: `Bearer ${localStorage.getItem('poi-jwt')}`}});
+    this.points.length = 0;
+    await this.getPoints();
   }
 
-  getCategories() {
-    return this.categories
+  async getCategories() {
+    const response = await axios.get('http://localhost:3002/api/categories');
+    const categories = await response.data;
+    this.categories = categories;
+    return this.categories;
   }
 
 }

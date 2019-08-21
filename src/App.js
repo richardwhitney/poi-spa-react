@@ -6,7 +6,7 @@ class App extends Component {
   render() {
     return (
       <Fragment>
-        <Dashboard handleAddPointLocal={this.props.handleAddPointLocal} options={this.props.options}/>
+        <Dashboard handleAddPointLocal={this.props.handleAddPointLocal} handleAddPoint={this.props.handleAddPoint} options={this.props.options} points={this.props.points}/>
       </Fragment>
     );
   }
