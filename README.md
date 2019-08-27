@@ -1,68 +1,142 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# ICT Skills 2 Assignment - Single Page app.
 
-## Available Scripts
+Name: Richard Whitney
 
-In the project directory, you can run:
+## Overview.
 
-### `npm start`
+For this assignment I decided to recreate the frontend, single page application
+from a previous assignment using the React framework. The application is based
+on points of interest, and islands of Ireland in particular. 
 
-Runs the app in the development mode.<br>
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+The user is able to login or create an account and then view all islands.
+The user is able to create an island on the homepage and select an island to 
+view its details. Islands can be updated and deleted from the details screen.
 
-The page will reload if you make edits.<br>
-You will also see any lint errors in the console.
+The island data is served and maintained by a separate backend application that
+acts as a server. The frontend connects to this server with the use of API 
+endpoints.
 
-### `npm test`
+. . . . . List of user features  . . . .
 
-Launches the test runner in the interactive watch mode.<br>
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+- User authentication (login/signup)
+- list all islands
+- Create an island
+- View an island's details
+- Update an island
+- Delete an island
+- Backend integration with RESTful API (authentication, CRUD)
 
-### `npm run build`
+## Setup.
 
-Builds the app for production to the `build` folder.<br>
-It correctly bundles React in production mode and optimizes the build for the best performance.
+Having cloned the repo...  
 
-The build is minified and the filenames include the hashes.<br>
-Your app is ready to be deployed!
+**Step 1** Start the backend server  
+Clone the backend repo found at https://github.com/richardwhitney/poi-web-service and navigate
+project root
+- Install dependencies with npm install
+- Create .env file and paste in:
+-     cookie_name=poi-cookie
+      cookie_password=secretpasswordnotrevealedtoanyone
+      db=mongodb://point:point@cluster0-shard-00-00-nxnaw.mongodb.net:27017,cluster0-shard-00-01-nxnaw.mongodb.net:27017,cluster0-shard-00-02-nxnaw.mongodb.net:27017/point?ssl=true&replicaSet=Cluster0-shard-0&authSource=admin&retryWrites=true
+      CLOUDINARY_URL=cloudinary://979863147761913:P7auznxb2SJVzZEfVv3UlCOM86Q@dgbpagu5n
+- Run the index.js file to start the server
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+**Step 2** Start the React application  
+Navigate to project root  
+- Install dependencies with npm install
+- Start the application with npm start
+- Login details: Email: homer@simpson.com, Password: secret
 
-### `npm run eject`
+**Step 3 (Optional)** Run story book  
+Navigate to project root
+- Run npx start-storybook -p 9001 -c .storybook/
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## Data Model Design.
 
-Instead, it will copy all the configuration files and the transitive dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+![][model]
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+The authenticate component acts as a wrapper for all routes that
+require authentication to be viewed. When it is mounted it checks
+to see if there is a jwt in local storage and if found, sends it
+to the server. If a successful response is received a 'user' state in
+the Index component is updated and the protected route can be viewed.
+If unsuccessful the user is kicked back to the WelcomePage component.  
+The Navbar component uses renders either the MainMenu component or the 
+WelcomeMenu based on whether the user is authenticated or not.  
 
-## Learn More
+>>Example point data received from server
+![][point-data]
+ 
+>> Example category data received from server
+![][category-data]
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+>> Example user data received from server
+![][user-data]
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+## UI Design.
 
-### Code Splitting
+>> The entrance to the application. If a user tries to enter a protected route they wiil
+>> redirected here.
+![][welcome-page]
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
+>> The login page
+![][login-page]
 
-### Analyzing the Bundle Size
+>> The signup page
+![][signup-page]
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
+>> The dashboard page. Users can add an island or view already existing island
+![][dashboard-page]
 
-### Making a Progressive Web App
+>> The point detail page. Displays the details of a selected point. Buttons to 
+>> update and delete point
+![][point-detail-page]
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
+>> The update point page. Form is pre-populated with selected point's details
+![][update-point-page]
 
-### Advanced Configuration
+## Routing.
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
+- / (public) - default route displays the welcome page
+- /login (public) - displays the login page
+- /signup (public) - displays the signup page
+- /logout (public) - removes local jwt and redirects to welcome page
+- /dashboard (private) - displays all islands and the add island form
+- /poi/:id (private) - displays the details of a selected island with buttons to
+update or delete the point
+- /updatepoint/:id (private) - displays the update point page. The selected point's 
+details will be used to populated the update point form
 
-### Deployment
+## Storybook.
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
+. . . . . Include a screenshot of the fully expanded list of stories from the tool's UI (see below). Group the stories appropriately (e.g. Contact page group) . . . .
 
-### `npm run build` fails to minify
+![][stories]
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+. . . . State any Storybook add-ons used and include a screenshot(s) to illustrate.
+
+## Backend.
+
+. . . . . Briefly explain the backend/API used by the app (Stub, JSON-server, Custom Node, Open). For custom Node or Open API, list the endpoints it provides to your app and state the purpose of each
+
+## Authentication (if relevant).
+
+. . . . Briefly state the server-side authentication service used by your React app (Mock-auth, Custom Node/JWT, 3rd party(e.g. Firebase) ). Mention test username/passwords used . . . .
+
+## Independent learning.
+
+. . . . . State the non-standard aspects of React or other related technologies that you researched and applied in this assignment . . . . .
+
+[model]: ./public/react-model-diagram.png
+[point-data]: ./public/points-data.png
+[user-data]: ./public/user-data.png
+[category-data]: ./public/category-data.png
+[welcome-page]: ./public/welcome-page.png
+[login-page]: ./public/login-page.png
+[signup-page]: ./public/signup-page.png
+[dashboard-page]: ./public/dashboard-page.png
+[point-detail-page]: ./public/point-detail.png
+[update-point-page]: ./public/update-point.png
+[detail]: ./detail.png
+[stories]: ./stories.png
