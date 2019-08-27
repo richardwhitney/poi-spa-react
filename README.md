@@ -43,13 +43,13 @@ project root
 
 **Step 2** Start the React application  
 Navigate to project root  
-- Install dependencies with npm install
-- Start the application with npm start
+- Install dependencies with `npm install`
+- Start the application with `npm start`
 - Login details: Email: homer@simpson.com, Password: secret
 
 **Step 3 (Optional)** Run story book  
 Navigate to project root
-- Run npx start-storybook -p 9001 -c .storybook/
+- Run `npx start-storybook -p 9001 -c .storybook/`
 
 
 ## Data Model Design.
@@ -110,23 +110,48 @@ details will be used to populated the update point form
 
 ## Storybook.
 
-. . . . . Include a screenshot of the fully expanded list of stories from the tool's UI (see below). Group the stories appropriately (e.g. Contact page group) . . . .
-
 ![][stories]
-
-. . . . State any Storybook add-ons used and include a screenshot(s) to illustrate.
 
 ## Backend.
 
-. . . . . Briefly explain the backend/API used by the app (Stub, JSON-server, Custom Node, Open). For custom Node or Open API, list the endpoints it provides to your app and state the purpose of each
+I used a previously developed custom Node backend/API for this application.
+The backend provides a RESTful API for the frontend to communicate with.  
+#####Endpoints
+All endpoints have the base url 'http://localhost:3002'  
 
-## Authentication (if relevant).
+**Get**
+- /api/categories - Retrieves all categories
+- /api/points - Retrieves all islands
+- /api/points/{id} - Retrieves a specific island based on the id
+- /api/users/current - Retrieves the current logged in user
 
-. . . . Briefly state the server-side authentication service used by your React app (Mock-auth, Custom Node/JWT, 3rd party(e.g. Firebase) ). Mention test username/passwords used . . . .
+**Post**
+- /api/categories/{id}/points - Creates an island with data in the request body
+- /api/users - Creates a user with data in the request body
+- /api/users/authenticate - Attempts to authenticate user with email + password in request body
+
+**Put**
+- /api/points/{id} - Updates an island based on the id using data in the request body
+
+**Delete**
+- /api/points/{id} - Deletes a point based on the id
+
+## Authentication.
+
+I used JWT to authenticate users for my React app. When a user supplies the email
+and password a request is sent to the backend. If the email and password combination
+is valid a token is returned and stored in local storage. This token is then sent
+in the header of any request to a protected route. If the token is invalid or does
+not exist the user is redirected to the unprotected welcome page where they can attempt to 
+login.
+
+**Test username/passwords**
+- homer@simpson.com - secret
+- marge@simpson.com - secret
 
 ## Independent learning.
 
-. . . . . State the non-standard aspects of React or other related technologies that you researched and applied in this assignment . . . . .
+I learned how to use Semantic UI React to style the UI of the app.
 
 [model]: ./public/react-model-diagram.png
 [point-data]: ./public/points-data.png
@@ -138,5 +163,4 @@ details will be used to populated the update point form
 [dashboard-page]: ./public/dashboard-page.png
 [point-detail-page]: ./public/point-detail.png
 [update-point-page]: ./public/update-point.png
-[detail]: ./detail.png
-[stories]: ./stories.png
+[stories]: ./public/storybook.png
